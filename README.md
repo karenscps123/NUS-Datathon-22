@@ -1,3 +1,4 @@
+
 # Antiplatelet therapy for myocardial injury in ICU patients
 This project was done during the SG Healthcare AI Datathon 2022(SHADE22). 
 
@@ -26,3 +27,10 @@ From the MIMIC-IV database,
 
 # Conclusion 
 While there is a slight difference in mortality percentage, the minimal difference suggest that antiplatelet therapy does not yield much morality benefits for patients who had myocardial injury during their stay in the ICU. The side effects/complications of the antiplatelet therapy might even outweigh its benefits for the more vulnerable patients. 
+
+## Contributors
+PI: Dr Matthew Low
+Mentor: Dr Dominic Marshall
+Coordinator: Yeshe Kway (PhD student)
+Data engineers: Dr Chong Sook Yee, Tristan Choo (NUS)
+Clinicians: Dr Matthew Low, Dr Cheryl Woo Ting Zhen, Kira Huiqi Ho (PT)
