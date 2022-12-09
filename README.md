@@ -32,5 +32,5 @@ While there is a slight difference in mortality percentage, the minimal differen
 PI: Dr Matthew Low
 Mentor: Dr Dominic Marshall
 Coordinator: Yeshe Kway (PhD student)
-Data engineers: Dr Chong Sook Yee, Tristan Choo (NUS)
+Data Analysts: Dr Chong Sook Yee, Karen Cheung Kai Ning (NUS), Tristan Choo (NUS)
 Clinicians: Dr Matthew Low, Dr Cheryl Woo Ting Zhen, Kira Huiqi Ho (PT)
