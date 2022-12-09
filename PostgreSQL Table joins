@@ -1,0 +1,40 @@
+with icu_cohort as (
+Select ie.subject_id, ie.hadm_id, ie.stay_id
+-- hospital level factors
+, adm.admittime, adm.dischtime, adm.race, adm.deathtime
+, adm.hospital_expire_flag
+, DENSE_RANK() OVER (PARTITION BY adm.subject_id ORDER BY adm.admittime) AS hospstay_seq
+, CASE
+    WHEN DENSE_RANK() OVER (PARTITION BY adm.subject_id ORDER BY adm.admittime) = 1 THEN True
+    ELSE False END AS first_hosp_stay	
+-- icu level factors 
+, ie.intime as icu_intime, ie.outtime as icu_outtime
+, (ie.outtime -  ie.intime) as los_icu
+, DENSE_RANK() OVER (PARTITION BY ie.hadm_id ORDER BY ie.intime) AS icustay_seq
+-- first ICU stay for the current hospitalization
+, CASE
+    WHEN DENSE_RANK() OVER (PARTITION BY ie.hadm_id ORDER BY ie.intime) = 1 THEN True
+    ELSE False END AS first_icu_stay,
+-- patients info 
+	pa.gender, pa.anchor_age, pa.dod
+	
+FROM mimiciv_icu.icustays as ie
+Left JOIN  mimiciv_hosp.admissions as adm
+    ON ie.hadm_id = adm.hadm_id
+Left JOIN  mimiciv_hosp.patients as pa
+	on ie.subject_id = pa.subject_id
+),
+	
+lab_info as (
+Select valuenum, valueuom, subject_id, itemid, charttime, storetime 
+from mimiciv_hosp.labevents
+where itemid = 51002 OR itemid = 51003 OR itemid = 52642 OR itemid = 51222 and valuenum is not null
+)
+
+-- select count (distinct icu_cohort.subject_id)
+select *
+from icu_cohort
+left join lab_info
+on icu_cohort.subject_id = lab_info.subject_id
+where first_icu_stay = 'True' and  first_hosp_stay = 'True' and lab_info.valuenum is not null
+
